@@ -1,36 +1,24 @@
-import React, {Component, useState} from 'react'
+import React, {useState} from 'react'
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
+import Snackbar from '@mui/material/Snackbar';
 // import HtmlIcon from '@mui/icons-material/Html';
 // import CssIcon from '@mui/icons-material/Css';
-import AdbIcon from '@mui/icons-material/Adb';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import { Paper, Toolbar } from '@mui/material';
 import ProfileLogo from '../../assets/images/profile_logo.jpg'
 import Zigzag from '../../assets/images/zigzag.png'
 import ZigzagIcon from '../../assets/images/zigzag_icon.png'
-import Work from '../../assets/images/work.png'
-import EventPro from '../../assets/images/Capture3.PNG'
-import Thajobz from '../../assets/images/Capture12.PNG'
-import Onqoba from '../../assets/images/Capture17.PNG'
-import PosDashboard from '../../assets/images/Captureb.PNG'
-import MenuContactless from '../../assets/images/menu2.PNG'
 import MenuContactlessIcon from '../../assets/images/menucontactless.png'
 import Greyfriars from '../../assets/images/grefres.png'
 import MyAccentWay from '../../assets/images/myaccent.webp'
 import Movie4All from '../../assets/images/movie4all.PNG'
-import htmlIcon from '../../assets/images/HTML5_logo_and_wordmark.svg.png'
 
 import cssIcon from '../../assets/images/download.png'
 import jqueryIcon from '../../assets/images/jquery-badge.png'
@@ -41,20 +29,11 @@ import bootstrapIcon from '../../assets/images/bootstrap-icon-b-letter-logo_7810
 import vueIcon from '../../assets/images/download (4).png'
 import reactIcon from '../../assets/images/React-icon.svg.png'
 import wordpressIcon from '../../assets/images/download (3).png'
-import kajabiIcon from '../../assets/images/5e267002496ea060c914a34b_facebook_share.png'
 import djangoIcon from '../../assets/images/django-logo-4C5ECF7036-seeklogo.com.png'
-import grpcIcon from '../../assets/images/grpc-icon-color.png'
-import figmaIcon from '../../assets/images/1667px-Figma-logo.svg.png'
-import Delicious from '../../assets/images/p9.PNG'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Stack from '@mui/material/Stack';
 import CircleIcon from '../../assets/images/circle.png'
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
 import './styles.css'
 import { Link } from 'react-router-dom';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -165,9 +144,6 @@ const LandingPage = ({mailto, label}) => {
         console.log(ele)
         const work = document.getElementById(`${ele.id}`)
         work.scrollIntoView({ behavior: "smooth" });
-    }
-    const goToMail = () => {
-        
     }
 
     const goToProjectSite = (val) => {
@@ -294,43 +270,43 @@ const LandingPage = ({mailto, label}) => {
                 </Typography>
                 <Box sx={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: '2rem 15rem'}}>
                     <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 1.5rem', margin: '.5rem .5rem'}}>
-                        <img  src={cssIcon}  />
+                        <img  src={cssIcon}  alt='img'/>
                         {/* <Typography className='tech__stack-text'>CSS</Typography> */}
                     </Grid>
                     <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 1.5rem', margin: '.5rem .5rem'}}>
-                        <img  src={javaScriptIcon} />   
+                        <img  src={javaScriptIcon} alt='img' />   
                         {/* <Typography className='tech__stack-text'>JavaScript</Typography> */}
                     </Grid>
                     <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 1.5rem', margin: '.5rem .5rem'}}>
-                    <img  src={typeScriptIcon} />
+                    <img  src={typeScriptIcon} alt='img' />
                     {/* <Typography className='tech__stack-text'>TypeScript</Typography> */}
                     </Grid>
                     <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 1.5rem', margin: '.5rem .5rem'}}>
-                    <img src={vueIcon}  />
+                    <img src={vueIcon}  alt='img' />
                     {/* <Typography className='tech__stack-text'>Vue Js</Typography> */}
                     </Grid>
                     <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 1.5rem', margin: '.5rem .5rem'}}>
-                    <img src={reactIcon} />
+                    <img src={reactIcon} alt='img' />
                     {/* <Typography className='tech__stack-text'>React Js</Typography> */}
                     </Grid>
                     <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 1.5rem', margin: '.5rem .5rem'}}>
-                    <img src={wordpressIcon} />
+                    <img src={wordpressIcon} alt='img' />
                     {/* <Typography className='tech__stack-text'>WordPress</Typography> */}
                     </Grid>
-                    <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', flexDirection: 'column', justifyContent: 'center', padding: '2rem 1.5rem', margin: '.5rem .5rem'}}>
-                    <img src={bootstrapIcon} />
+                    <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 1.5rem', margin: '.5rem .5rem'}}>
+                    <img src={bootstrapIcon} alt='img' />
                     {/* <Typography className='tech__stack-text'>Bootstrap</Typography> */}
                     </Grid>
                     <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 1.5rem', margin: '.5rem .5rem'}}>
-                    <img width={104} src={tailwindIcon} />
+                    <img width={104} src={tailwindIcon} alt='img' />
                     {/* <Typography className='tech__stack-text'>TailwindCss</Typography> */}
                     </Grid>
                     <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 1.5rem', margin: '.5rem .5rem'}}>
-                    <img src={djangoIcon} />
+                    <img src={djangoIcon} alt='img' />
                     {/* <Typography className='tech__stack-text'>Django</Typography> */}
                     </Grid>
                     <Grid component={Paper} width={150} height={150} elevation={3} borderRadius={'20px'} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 3rem', margin: '.5rem .5rem'}}>
-                    <img src={jqueryIcon} />
+                    <img src={jqueryIcon} alt='img' />
                     {/* <Typography className='tech__stack-text'>Jquery</Typography> */}
                     </Grid>
                 </Box>
@@ -449,12 +425,12 @@ const LandingPage = ({mailto, label}) => {
             </Box>
             <Box id="service_" className="footer">
                 <Box className="social-link">
-                    <a href="https://github.com/misgana96" target='_blank' style={{
+                    <a href="https://github.com/misgana96" target='_blank' rel="noreferrer" style={{
                         textDecoration: 'none'
                     }}>
                         <GitHubIcon sx={{fontSize: 80}} />
                     </a>
-                    <a href="https://www.linkedin.com/in/misgana-yoseph-36b42315b/" target='_blank' style={{
+                    <a href="https://www.linkedin.com/in/misgana-yoseph-36b42315b/" target='_blank' rel="noreferrer" style={{
                         textDecoration: 'none'
                     }}>
                         <LinkedInIcon sx={{fontSize: 80}} />
