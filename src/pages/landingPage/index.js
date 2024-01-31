@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, useState} from 'react'
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
@@ -10,6 +10,8 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 // import HtmlIcon from '@mui/icons-material/Html';
 // import CssIcon from '@mui/icons-material/Css';
 import AdbIcon from '@mui/icons-material/Adb';
@@ -24,6 +26,10 @@ import Thajobz from '../../assets/images/Capture12.PNG'
 import Onqoba from '../../assets/images/Capture17.PNG'
 import PosDashboard from '../../assets/images/Captureb.PNG'
 import MenuContactless from '../../assets/images/menu2.PNG'
+import MenuContactlessIcon from '../../assets/images/menucontactless.png'
+import Greyfriars from '../../assets/images/grefres.png'
+import MyAccentWay from '../../assets/images/myaccent.webp'
+import Movie4All from '../../assets/images/movie4all.PNG'
 import htmlIcon from '../../assets/images/HTML5_logo_and_wordmark.svg.png'
 
 import cssIcon from '../../assets/images/download.png'
@@ -40,7 +46,7 @@ import djangoIcon from '../../assets/images/django-logo-4C5ECF7036-seeklogo.com.
 import grpcIcon from '../../assets/images/grpc-icon-color.png'
 import figmaIcon from '../../assets/images/1667px-Figma-logo.svg.png'
 import Delicious from '../../assets/images/p9.PNG'
-
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Stack from '@mui/material/Stack';
 import CircleIcon from '../../assets/images/circle.png'
 import Card from '@mui/material/Card';
@@ -53,6 +59,8 @@ import './styles.css'
 import { Link } from 'react-router-dom';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import app from '../../firebase'
+
 const LandingPage = ({mailto, label}) => {
 
     const pages = [
@@ -69,9 +77,90 @@ const LandingPage = ({mailto, label}) => {
             id: "skill_"
         }
     ]
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const recentWorks = [
+        {
+            url: "https://greyfriars.wpenginepowered.com/",
+            image: Greyfriars,
+            color: "#ECF4F4"
+        },
+        {
+            url: "https://myaccentway.com/",
+            image: MyAccentWay,
+            color: "linear-gradient(260.97deg, #227DB6 3.87%, #855791 45.01%, #EA2063 85.65%);"
+        },
+        {
+            url: "https://admin-dev-menu-contactless.onqoba.com/login",
+            image: MenuContactlessIcon,
+            color: "#e9ad9d"
+        },
+        {
+            url: "https://movie4all-6vfhgjjh2-misgnas-projects.vercel.app/",
+            image: Movie4All,
+            color: "#000"
+        }
+    ]
+    // const [anchorElNav, setAnchorElNav] = useState(null);
+    // const [anchorElUser, setAnchorElUser] = useState(null);
 
+    const [isHovering, setIsHovering] = useState(false)
+
+    const [snacker, setSnacker] = useState({
+        open: false,
+        vertical: 'top',
+        horizontal: 'center'
+    })
+
+    const [success, setSuccess] = useState('')
+    const [error, setError] = useState('')
+
+    const {open, vertical, horizontal} = snacker;
+
+    const handleClick = (newState) => {
+        setSnacker({ ...newState, open: true});
+      };
+    
+      const handleClose = () => {
+        setSnacker({ ...snacker, open: false });
+        setSuccess('')
+        setError('')
+      };
+
+    const [state, setState] = useState({
+        name: "",
+        email: "",
+        message: ""
+    })
+
+    const {name, email, message} = state
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!name || !email || !message) {
+            setError('Please provide value in each input field')
+            handleClick({ vertical: 'top', horizontal: 'center'})
+        } else {
+            app.child("portfolio").push(state);
+            setState({
+                name: "",
+                email: "",
+                message: ""
+            });
+            setSuccess('Form Submitted Successfully')
+            handleClick({ vertical: 'top', horizontal: 'center'})
+        }
+    }
+    const handleInputChange = (e) => {
+        let { name, value } = e.target;
+        setState({ ...state, [name]: value });
+      };
+    
+    const handleMouseOver = () => {
+        setIsHovering(true)
+    }
+
+    const handleMouseOut = () => {
+        setIsHovering(false)
+    }
     const goToAnchor = (ele) => {
         console.log(ele)
         const work = document.getElementById(`${ele.id}`)
@@ -80,13 +169,17 @@ const LandingPage = ({mailto, label}) => {
     const goToMail = () => {
         
     }
+
+    const goToProjectSite = (val) => {
+        window.open(val, "_blank")
+    }
     return (
         <Box className="container-content">
             <AppBar position="fixed" sx={{backgroundColor: "#F8F7F1"}}
             elevation={0}>
                 <Container maxWidth="xl">
-                    <Toolbar disableGutters>
-                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <Toolbar disableGutters sx={{justifyContent: 'space-around'}}>
+                        {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: 'space-around'}}>
                             <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -95,7 +188,7 @@ const LandingPage = ({mailto, label}) => {
                                 horizontal: 'left',
                             }}
                             keepMounted
-                            transformOrigin={{
+                            transformOrigin={{  
                                 vertical: 'top',
                                 horizontal: 'left',
                             }}
@@ -111,15 +204,15 @@ const LandingPage = ({mailto, label}) => {
                                     </MenuItem>
                                 ))}  
                             </Menu>
-                        </Box>
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        <Typography variant="text"
-                        sx={{ my: 2, color: 'black', display: 'block',
-                        fontFamily: 'Shalimar, cursive', fontSize: 48, fontWeight: 400 }}>
-                        Misgana
-                        </Typography>
+                        </Box> */}
+                        <Box sx={{display: { xs: 'none', md: 'flex' }, alignItems: 'center', justifyContent: 'space-around', width: '85%'}}>
+                            <Typography variant="text"
+                            sx={{ my: 2, color: 'black', display: 'block',
+                            fontFamily: 'Shalimar, cursive', fontSize: 48, fontWeight: 400 }}>
+                            Misgana
+                            </Typography>
                         {pages.map((page) => (
-                        <Button
+                        <Box
                             key={page.title}
                             sx={{ my: 2, ml: 10, color: 'black', display: 'block',
                                 fontFamily: 'Shalimar, cursive', fontWeight: 400 }}
@@ -127,37 +220,40 @@ const LandingPage = ({mailto, label}) => {
                                     goToAnchor(page)
                                 }}>
                             {page.title}
-                        </Button>
+                        </Box>
                         ))}
-                        <Button variant="text">
+                        <Box sx={{
+                            marginLeft: '25px'
+                        }}>
                             <Link
+                                sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4}}
                                 className='email'
                                 to='#'
                                 onClick={(e) => {
                                     window.location.href = 'mailto:misganayoseph@gmail.com';
                                     e.preventDefault();
                                 }}>
+                                <EmailRoundedIcon sx={{ml: 2}}/>
                                 <Typography variant="h6"
                                     textAlign="center"
-                                    sx={{ my: 2, ml: 25, color: 'black', display: 'block',
+                                    sx={{ color: 'black', display: 'block',
                                     fontFamily: 'Shalimar, cursive', fontWeight: 400 }}>
                                     misganayoseph@gmail.com
                                 </Typography>
                             </Link>                      
-                            <EmailRoundedIcon sx={{ml: 2}}/>
-                        </Button>
+                        </Box>
                     </Box>
                     </Toolbar>
                 </Container>
             </AppBar>
-            <Box sx={{marginTop: 20, mx: 10, display: 'flex'}}>
+            <Box sx={{marginTop: 20, mx: 10, display: 'flex', maxWidth: 'xl', marginLeft: 'auto', marginRight: 'auto', width: 1100}}>
                 <Avatar src={ProfileLogo} sx={{width: 164, height: 194}} />
                 <Typography variant="h5" sx={{fontFamily: "Belleza, cursive", fontSize: 64, fontWeight: 400, ml: 5, mt: 2}} >
                     Hi There <br/>
                     I’m Misgana
                 </Typography>
             </Box>
-            <Box sx={{display: 'flex'}}>
+            <Box sx={{display: 'flex', maxWidth: 'xl', marginLeft: 'auto', marginRight: 'auto'}}>
                 <Box sx={{display: 'flex', flexDirection: 'column', marginTop: 10, mx: 10}} width={600}>
                     <Typography width={488} textAlign="center" color="initial" sx={{fontFamily: "Belleza", fontSize: 20}}>
                         I am a web developer. I develop web applications using React Js, Vue Js, Bootstrap, WordPress, Kajabi, 
@@ -169,21 +265,21 @@ const LandingPage = ({mailto, label}) => {
                     </Typography>
                     <Box sx={{display: 'flex'}}>
                         <Stack direction="row">
-                            <img className='circle-icon' src={CircleIcon} />
-                            <img className='zigzag-icon' src={ZigzagIcon} />
+                            <img className='circle-icon' src={CircleIcon}  alt='icon'/>
+                            <img className='zigzag-icon' src={ZigzagIcon} alt='icon'/>
                         </Stack>
 
                     </Box>
                 </Box>
                 <Box sx={{display: 'flex', flexDirection: 'column'}} width={600}>
                     <Box>
-                        <img className='zigzag' src={Zigzag} />
+                        <img className='zigzag' src={Zigzag} alt='icon'/>
                     </Box>
                     <Box width={488} className="what-help">
-                                <Typography variant="h3" color="initial" sx={{fontFamily: "Belleza", fontSize: 80}}>
+                                <Typography variant="h3" color="initial" sx={{fontFamily: "Belleza", fontSize: 42, textAlign: 'center', color: '#134776'}}>
                                     what do I help
                                 </Typography>
-                                <Typography variant="h6" color="initial" sx={{fontFamily: "Belleza", fontSize: 20, color: '#134776', textAlign: 'center', marginTop: 5}}>
+                                <Typography variant="h6" color="initial" sx={{fontFamily: "Belleza", fontSize: 20, textAlign: 'center', marginTop: 5}}>
                                     i am a software engineer with more than four years of experience. recognized as a practical and effective developer, experienced in leading cross-functional teams in a time-pressured setting to complete projects on schedule and within budget.
                                 </Typography>
                             </Box>
@@ -191,7 +287,7 @@ const LandingPage = ({mailto, label}) => {
             </Box>
             <Box id="skill_" sx={{textAlign: 'center'}}>
                 <Typography variant="h1" color="initial"
-                sx={{fontFamily: "Belleza", fontSize: 80, color: '#134776', textAlign: 'center', marginTop: 5}}
+                sx={{fontFamily: "Belleza", fontSize: 42, color: '#134776', textAlign: 'center', marginTop: 5}}
                 >What I can do</Typography>
                 <Typography variant="h5" color="initial" sx={{fontFamily: "Belleza", textAlign: 'center', marginTop: 5}}>
                     Below is just a high-level list of the languages / frameworks that I'm familiar with.
@@ -237,51 +333,118 @@ const LandingPage = ({mailto, label}) => {
                     <img src={jqueryIcon} />
                     {/* <Typography className='tech__stack-text'>Jquery</Typography> */}
                     </Grid>
-                    {/* <ul>
-                        <li>HTML</li>
-                        <li>CSS</li>
-                        <li>jQuery</li>
-                        <li>JavaScript</li>
-                        <li>Tailwind Css</li>
-                        <li>Bootstrap</li>
-                        <li>TypeScript</li>
-                    </ul>
-                    <ul>
-                        <li>Vue Js</li>
-                        <li>React Js</li>
-                        <li>Wordpress</li>
-                        <li>Kajabi</li>
-                        <li>gRPC</li>
-                        <li>Loopback</li>
-                        <li>Figma</li>
-                    </ul> */}
                 </Box>
             </Box>
             <Box id="work_" className="work" sx={{backgroundColor: "#F8F7F1"}}>
                 <Typography variant="h1" color="initial"
-                sx={{fontFamily: "Belleza", fontSize: 80, color: '#134776', textAlign: 'center', marginTop: 5}}
-                >Work and Experiences </Typography>
-                <Box sx={{marginTop: 5}}>
-                    <Carousel showArrows="true">
-                        <div>
-                            <img src={EventPro}/>
-                        </div>
-                        <div>
-                            <img src={Thajobz} />
-                        </div>
-                        {/* <div>
-                            <img src={Onqoba} />
-                        </div> */}
-                        {/* <div>
-                            <img src={PosDashboard} />
-                        </div> */}
-                        <div>
-                            <img src={MenuContactless} />
-                        </div>
-                        <div>
-                            <img src={Delicious} />
-                        </div>
-                    </Carousel>
+                sx={{fontFamily: "Belleza", fontSize: 42, color: '#134776', textAlign: 'center', marginTop: 5}}
+                >My Recent Works</Typography>
+                <Box sx={{my: 10, px: 2, display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: 5, justifyContent: 'center'}}>
+                    {
+                        recentWorks.map((work) => (
+                            <Paper className='previous__task' elevation={4} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${work.color}`, width: '380px', height: '260px', borderRadius: '15px'}}>
+                                    <figure>
+                                        <img src={work.image} alt="Trulli" width={200}/>,
+                                        <figcaption
+                                        onMouseOver={handleMouseOver}
+                                        onMouseOut={handleMouseOut}>
+                                            {isHovering && (
+                                                <Button 
+                                                variant="contained"
+                                                onClick={(() => {
+                                                    goToProjectSite(work.url)
+                                                })} endIcon={<ArrowForwardIcon/>}>
+                                                    Visti Website
+                                                </Button>
+                                            )}
+                                            {!isHovering && (
+                                                <Button 
+                                                variant="outlined"
+                                                onClick={(() => {
+                                                    goToProjectSite(work.url)
+                                                })} endIcon={<ArrowForwardIcon/>}>
+                                                    Visti Website
+                                                </Button>
+                                            )}
+                                        </figcaption>
+                                    </figure>
+                            </Paper>
+                        ))
+                    }
+                </Box>
+            </Box>
+            <Box
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, cols: 12 },
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    py: 5
+                  }}
+                noValidate
+                autoComplete='off'>
+                <Typography variant="h6" color="initial"
+                    sx={{fontFamily: "Belleza", fontSize: 32, color: '#134776', textAlign: 'center', marginTop: 5}}
+                    >Thanks for taking the time to reach out. How can I help you today?
+                </Typography>
+                <Box sx={{display: 'flex', py: 5, '& .MuiTextField-root': { m: 1, cols: 12 },}}>
+                    <TextField
+                        fullWidth 
+                        id='name'
+                        label="Name"
+                        type="name"
+                        name='name'
+                        autoComplete='current-name'
+                        onChange={handleInputChange}
+                        value={name}
+                        size='large'/>
+                    <TextField
+                        fullWidth 
+                        id='email'
+                        label="email"
+                        type="email"
+                        name='email'
+                        autoComplete='current-email'
+                        onChange={handleInputChange}
+                        value={email}/>
+                </Box>
+                <TextField
+                    id='message'
+                    label="Message"
+                    type="message"
+                    name='message'
+                    multiline
+                    rows={12}
+                    cols={12}
+                    autoComplete='current-message'
+                    onChange={handleInputChange}
+                    value={message}/>
+                <Box 
+                    variant='outlined' 
+                    size='large' 
+                    sx={{my: 10, marginLeft: 'auto', marginRight: 'auto'}}
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}>
+                    {isHovering && (
+                        <Button 
+                            variant='contained' 
+                            size='large' 
+                            sx={{width: '200px', my: 3, py: 2, marginLeft: 'auto', marginRight: 'auto', borderRadius: '999px'}}
+                            onClick={handleSubmit}>
+                                Submit
+                        </Button>
+                    )}
+                    {!isHovering && (
+                        <Button 
+                            variant='outlined' 
+                            size='large' 
+                            sx={{width: '200px', my: 3, py: 2, marginLeft: 'auto', marginRight: 'auto', borderRadius: '999px'}}>
+                                Submit
+                        </Button>
+                    )}
                 </Box>
             </Box>
             <Box id="service_" className="footer">
@@ -298,6 +461,17 @@ const LandingPage = ({mailto, label}) => {
                     </a>
                 </Box>
                 {/* <small className='copyright'>copyright @2023</small> */}
+            </Box>
+
+            <Box sx={{width: 500}}>
+                    <Snackbar
+                        anchorOrigin={{vertical, horizontal}}
+                        open={open}
+                        onClose={handleClose}
+                        message={success ? success : error}
+                        key={vertical + horizontal}>
+
+                    </Snackbar>
             </Box>
         </Box>
     )

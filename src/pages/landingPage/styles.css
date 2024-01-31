@@ -63,6 +63,10 @@
     color: #134776!important;
 }
 .email {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
     text-decoration: none;
 }
 .skill-list {
@@ -92,4 +96,29 @@
     font-family: 'cursive'!important;
     font-size: 22px!important;
     font-weight: 700 !important;
+}
+.previous__task {
+    position: relative;
+}
+.previous__task figure img {
+    opacity: 1;
+}
+.previous__task figure figcaption {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 1;
+    opacity: 0;
+}
+.previous__task:hover figure img {
+    display: none;
+    opacity: 0;
+}
+.previous__task:hover figure {
+    position: relative;
+}
+.previous__task:hover figure figcaption {
+    display: block;
+    opacity: 1;
+    z-index: 1;
 }
